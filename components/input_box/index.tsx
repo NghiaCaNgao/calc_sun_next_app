@@ -1,36 +1,69 @@
 import Image from "next/image"
 import Logo from "@/assets/images/logo.png";
 import { IM_Fell_DW_Pica_SC } from "@next/font/google"
-import InputText from "../input_text";
-import InputSelect from "../input_select";
+import InputText from "../input/input_text";
+import InputSelect from "../input/input_select";
 import { useState } from "react";
+import ErrorMessage from "../input/error_message/error_message";
 
 const im_fell_dw_pica_sc = IM_Fell_DW_Pica_SC({ subsets: ['latin'], weight: "400" });
 
+const GMT = [{
+    text: "GMT +01:00",
+    selected: false,
+}, {
+    text: "GMT +01:00",
+    selected: false,
+},
+{
+    text: "GMT +01:00",
+    selected: false,
+}, {
+    text: "GMT +01:00",
+    selected: true,
+}, {
+    text: "GMT +01:00",
+    selected: false,
+}, {
+    text: "GMT +01:00",
+    selected: false,
+}]
+
 export default function InputBox() {
-    const [lat, setLat] = useState(0);
-    const [long, setLong] = useState(0);
+    const [lat, setLat] = useState(21);
+    const [long, setLong] = useState(105);
+    const [error_1, setError_1] = useState("");
 
     function onHandleLatChange(value: string) {
         setLat(Number(value));
     }
 
-    function latitudeChecker(value: string) {
-        return (!isNaN(Number(value))
-            && Number(value) >= -90
-            && Number(value) <= 90)
-            || value == "-";
+    function latitudeChecker(value: string): string {
+        if (value === "-")
+            return ""
+        else if (isNaN(Number(value))
+            || Number(value) < -90
+            || Number(value) > 90)
+            return "Field must be a number in range [-90, 90]";
+        else return "";
     }
 
     function onHandleLongChange(value: string) {
         setLong(Number(value));
     }
 
-    function longitudeChecker(value: string) {
-        return (!isNaN(Number(value))
-            && Number(value) >= -180
-            && Number(value) <= 180)
-            || value == "-";
+    function longitudeChecker(value: string): string {
+        if (value === "-")
+            return ""
+        else if (isNaN(Number(value))
+            || Number(value) < -180
+            || Number(value) > 180)
+            return "Field must be a number in range [-180, 180]";
+        else return "";
+    }
+
+    function placeChecker(value: string): string {
+        return "hello";
     }
 
     return (
@@ -42,30 +75,43 @@ export default function InputBox() {
                 <h3 className="ml-2 text-gray-800">SunMoving</h3>
             </div>
 
-            <div className="grid grid-rows-3 gap-2 p-5">
+            <div className="grid grid-rows-3 p-5">
                 <div>
-                    <InputSelect label="Place" placeholder="hanoi, vietnam" />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                    <div>
-                        <InputText
-                            label="Latitude"
-                            placeholder="21"
-                            value={lat.toString()}
-                            onChange={onHandleLatChange}
-                            checker={latitudeChecker} />
-                    </div>
-                    <div>
-                        <InputText
-                            label="Longitude"
-                            placeholder="105"
-                            value={long.toString()}
-                            onChange={onHandleLongChange}
-                            checker={longitudeChecker} />
-                    </div>
+                    <InputSelect
+                        label="Place"
+                        placeholder="hanoi, vietnam"
+                        data={GMT}
+                        checker={placeChecker} />
                 </div>
                 <div>
-                    <InputSelect label="Time zone" placeholder="GMT +7:00 : Bangkok" />
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
+                            <InputText
+                                label="Latitude"
+                                placeholder="21"
+                                data={lat.toString()}
+                                onValueChange={onHandleLatChange}
+                                onError={(error) => { setError_1(error) }}
+                                checker={latitudeChecker}
+                                tooltipContent="This is a helper" />
+                        </div>
+                        <div>
+                            <InputText
+                                label="Longitude"
+                                placeholder="105"
+                                data={long.toString()}
+                                onValueChange={onHandleLongChange}
+                                onError={(error) => { setError_1(error) }}
+                                checker={longitudeChecker} />
+                        </div>
+                    </div>
+                    <ErrorMessage message={error_1} />
+                </div>
+                <div>
+                    <InputSelect
+                        label="Time zone"
+                        placeholder="GMT +7:00 : Bangkok"
+                        data={GMT} />
                 </div>
             </div>
         </div>
