@@ -1,8 +1,11 @@
+import Icon, { IconSet } from "@/components/icon";
 import React, { ChangeEvent, KeyboardEvent, useState } from "react"
 import Input, { InputProps } from "../input";
+import { toast } from 'react-toastify';
 
 interface IProps extends InputProps {
-    data: string
+    data: string,
+    copy_button?: boolean
 }
 
 export default function InputText(props: IProps) {
@@ -35,6 +38,11 @@ export default function InputText(props: IProps) {
         }
     }
 
+    function copy() {
+        navigator.clipboard.writeText(value);
+        toast("Copied to clipboard!", { position: "top-center" })
+    }
+
     return (
         <Input {...props} focus={isFocus} error={error}>
             <input
@@ -46,6 +54,20 @@ export default function InputText(props: IProps) {
                 onKeyDown={handleKey}
                 className="p-1 px-3 outline-none w-full bg-transparent h-full">
             </input>
+            {props.copy_button ?
+                (<button
+                    onClick={copy}
+                    className={
+                        "w-8 h-8 m-1 rounded-md flex justify-center items-center flex-none outline-none "
+                        + "hover:bg-indigo-200 "
+                        + (isFocus
+                            ? error
+                                ? "bg-red-200"
+                                : "bg-indigo-200"
+                            : "bg-gray-200")}>
+                    <Icon icon={IconSet.Copy} stroke="#62618F" />
+                </button>)
+                : void 0}
         </Input>
     )
 }

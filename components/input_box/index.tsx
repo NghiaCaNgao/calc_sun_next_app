@@ -67,12 +67,17 @@ export default function InputBox() {
     }
 
     return (
-        <div className="bg-white w-96 m-2 p-2 rounded-2xl shadow-xl">
+        <div className="bg-white m-2 p-2 rounded-2xl shadow-xl">
             <div className={(im_fell_dw_pica_sc.className + " flex text-4xl items-center p-2")}>
                 <div className="h-16 w-16">
                     <Image src={Logo} alt="a beautiful sun" className="object-scale-down"></Image>
                 </div>
                 <h3 className="ml-2 text-gray-800">SunMoving</h3>
+            </div>
+
+
+            <div className="ml-5 ">
+                <ErrorMessage message={error_1} />
             </div>
 
             <div className="grid grid-rows-3 p-5">
@@ -81,37 +86,38 @@ export default function InputBox() {
                         label="Place"
                         placeholder="hanoi, vietnam"
                         data={GMT}
-                        checker={placeChecker} />
+                        checker={placeChecker}
+                        onError={(error) => { setError_1(error) }} />
                 </div>
-                <div>
-                    <div className="grid grid-cols-2 gap-3">
-                        <div>
-                            <InputText
-                                label="Latitude"
-                                placeholder="21"
-                                data={lat.toString()}
-                                onValueChange={onHandleLatChange}
-                                onError={(error) => { setError_1(error) }}
-                                checker={latitudeChecker}
-                                tooltipContent="This is a helper" />
-                        </div>
-                        <div>
-                            <InputText
-                                label="Longitude"
-                                placeholder="105"
-                                data={long.toString()}
-                                onValueChange={onHandleLongChange}
-                                onError={(error) => { setError_1(error) }}
-                                checker={longitudeChecker} />
-                        </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                    <div>
+                        <InputText
+                            label="Latitude"
+                            placeholder="21"
+                            data={lat.toString()}
+                            onValueChange={onHandleLatChange}
+                            onError={(error) => { setError_1(error) }}
+                            checker={latitudeChecker}
+                            tooltipContent="This is a helper" />
                     </div>
-                    <ErrorMessage message={error_1} />
+                    <div>
+                        <InputText
+                            label="Longitude"
+                            placeholder="105"
+                            data={long.toString()}
+                            onValueChange={onHandleLongChange}
+                            onError={(error) => { setError_1(error) }}
+                            checker={longitudeChecker} />
+                    </div>
                 </div>
+
                 <div>
                     <InputSelect
                         label="Time zone"
                         placeholder="GMT +7:00 : Bangkok"
-                        data={GMT} />
+                        data={GMT}
+                        onError={(error) => { setError_1(error) }} />
                 </div>
             </div>
         </div>

@@ -18,13 +18,13 @@ export default function Selector({ data, pop_in }: IProps) {
         <div
             className={
                 "bg-white shadow-2xl rounded-xl p-4 w-full border-2 border-slate-400 "
-                + "max-h-36 overflow-y-scroll absolute top-20 left-0 z-50 "
-                + "animate__animated animate__faster "
+                + "max-h-36 overflow-y-scroll absolute top-20 left-0 "
+                + "animate__animated animate__faster transition-all duration-500 scroll-smooth "
                 + (!state.is_first_show
                     ? "hidden "
                     : pop_in
-                        ? "animate__fadeInUp"
-                        : "animate__fadeOutDown")
+                        ? "animate__fadeInUp z-50"
+                        : "animate__fadeOutDown -z-10")
             }>
             {data.map((item, index) => (
                 <div

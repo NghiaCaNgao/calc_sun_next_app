@@ -11,6 +11,7 @@
   "dependencies": {
     "@next/font": "13.1.6",
     "@nghiavuive/sunset_calc": "^1.0.6",
+    "@reduxjs/toolkit": "^1.9.2",
     "@tippyjs/react": "^4.2.6",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
@@ -20,9 +21,12 @@
     "eslint-config-next": "13.1.6",
     "leaflet": "^1.9.3",
     "next": "13.1.6",
+    "next-redux-wrapper": "^8.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-leaflet": "^4.2.0",
+    "react-redux": "^8.0.5",
+    "react-toastify": "^9.1.1",
     "typescript": "4.9.5"
   },
   "devDependencies": {
